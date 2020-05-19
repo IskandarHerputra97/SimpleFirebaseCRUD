@@ -122,7 +122,7 @@ class LoginViewController: UIViewController {
     //MARK: - ACTIONS
     @objc func loginButtonTapped(sender: UIButton!) {
         let homeViewController = HomeViewController()
-        navigationController?.setViewControllers([homeViewController], animated: true)
+        navigationController?.present(homeViewController, animated: true, completion: nil)
     }
     
     @objc func registerPageButtonTapped() {

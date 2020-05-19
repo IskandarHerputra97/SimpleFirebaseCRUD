@@ -93,7 +93,7 @@ class RegisterViewController: UIViewController {
         registerButton.setTitle("Register", for: .normal)
         registerButton.setTitleColor(.white, for: .normal)
         
-        registerButton.addTarget(self, action: #selector(loginButtonTapped), for: .touchUpInside)
+        registerButton.addTarget(self, action: #selector(registerButtonTapped(sender:)), for: .touchUpInside)
     }
     
     func setupLoginPageButton() {
@@ -119,9 +119,9 @@ class RegisterViewController: UIViewController {
     }
     
     //MARK: - ACTIONS
-    @objc func loginButtonTapped(sender: UIButton!) {
+    @objc func registerButtonTapped(sender: UIButton!) {
         let homeViewController = HomeViewController()
-        navigationController?.setViewControllers([homeViewController], animated: true)
+        navigationController?.present(homeViewController, animated: true, completion: nil)
     }
     
     @objc func loginPageButtonTapped() {

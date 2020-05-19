@@ -11,39 +11,50 @@ import UIKit
 class HomeViewController: UIViewController {
 
     //MARK: - PROPERTIES
-    let signOutButton = UIButton()
-    
+    let tabBar = UITabBarController()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = .white
-        self.title = "Home Page"
-        
-        setupSignOutButton()
+        setupTabBar()
+        view.backgroundColor = .purple
     }
     
     //MARK: - SETUP UI
-    func setupSignOutButton() {
-        view.addSubview(signOutButton)
+    func setupTabBar() {
+        let staffListViewController = StaffListViewController()
+        staffListViewController.title = "Staff List"
         
-        signOutButton.setTitle("Sign Out", for: .normal)
-        signOutButton.setTitleColor(.red, for: .normal)
+        let addStaffViewController = AddStaffViewController()
+        addStaffViewController.title = "Add Staff"
         
-        signOutButton.addTarget(self, action: #selector(signOutButtonTapped), for: .touchUpInside)
+        let profileViewController = ProfileViewController()
+        profileViewController.title = "Profile"
         
-        setSignOutButtonConstraints()
-    }
-    
-    //MARK: - SET CONSTRAINTS
-    func setSignOutButtonConstraints() {
-        signOutButton.translatesAutoresizingMaskIntoConstraints = false
-        signOutButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        signOutButton.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-    }
-    
-    //MARK: - ACTIONS
-    @objc func signOutButtonTapped() {
-        let loginViewController = LoginViewController()
-        navigationController?.setViewControllers([loginViewController], animated: true)
+        let navigationController1 = UINavigationController(rootViewController: staffListViewController)
+        //let navigationController1 = UINavigationController(rootViewController: StaffTableListViewController())
+        
+        let navigationController2 = UINavigationController(rootViewController: addStaffViewController)
+        
+        let navigationController3 = UINavigationController(rootViewController: profileViewController)
+        
+        //let item1 = UITabBarItem(tabBarSystemItem: .bookmarks, tag: 0)
+        //let item2 = UITabBarItem(tabBarSystemItem: .contacts, tag: 1)
+        //let item3 = UITabBarItem(tabBarSystemItem: .favorites, tag: 2)
+        
+        //staffListViewController.tabBarItem = item1
+        //addStaffViewController.tabBarItem = item2
+        //profileViewController.tabBarItem = item3
+        
+        //navigationController1.tabBarItem = item1
+        //navigationController2.tabBarItem = item2
+        //navigationController3.tabBarItem = item3
+        
+        //tabBar.viewControllers = [staffListViewController, addStaffViewController, profileViewController]
+        tabBar.viewControllers = [navigationController1, navigationController2, navigationController3]
+        
+        //tabBar.selectedIndex = 2
+        
+        self.view.addSubview(tabBar.view)
     }
 }
