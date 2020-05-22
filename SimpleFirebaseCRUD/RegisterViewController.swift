@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class RegisterViewController: UIViewController {
     //MARK: - PROPERTIES
@@ -21,6 +22,9 @@ class RegisterViewController: UIViewController {
     let scrollView = UIScrollView()
     
     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+    
+    var email: String?
+    var password: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +91,7 @@ class RegisterViewController: UIViewController {
     func setupPasswordTextField() {
         passwordTextField.borderStyle = .line
         passwordTextField.backgroundColor = .white
+        passwordTextField.isSecureTextEntry = true
     }
     
     func setupRegisterButton() {
@@ -120,8 +125,19 @@ class RegisterViewController: UIViewController {
     
     //MARK: - ACTIONS
     @objc func registerButtonTapped(sender: UIButton!) {
-        let homeViewController = HomeViewController()
-        navigationController?.present(homeViewController, animated: true, completion: nil)
+        email = emailTextField.text
+        password = passwordTextField.text
+        
+        Auth.auth().createUser(withEmail: email!, password: password!) { (user, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else if let user = user {
+                print("user = \(user)")
+                let homeViewController = HomeViewController()
+                self.navigationController?.present(homeViewController, animated: true, completion: nil)
+            }
+        }
+        
     }
     
     @objc func loginPageButtonTapped() {

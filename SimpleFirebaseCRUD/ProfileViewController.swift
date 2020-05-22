@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import Firebase
 
 class ProfileViewController: UIViewController {
 
     //MARK: - Properties
     let profileLabel = UILabel()
     let signOutButton = UIButton()
+    var handle: AuthStateDidChangeListenerHandle?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +22,20 @@ class ProfileViewController: UIViewController {
         //view.backgroundColor = .orange
         setupProfileLabel()
         setupSignOutButton()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            print("auth = \(auth)")
+            if let user = user {
+                print("user = \(user)")
+                self.profileLabel.text = user.email
+            }
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        Auth.auth().removeStateDidChangeListener(handle!)
     }
     
     //MARK: - SETUP UI

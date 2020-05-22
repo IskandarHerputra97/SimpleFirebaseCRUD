@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class LoginViewController: UIViewController {
 
@@ -22,6 +23,9 @@ class LoginViewController: UIViewController {
     let scrollView = UIScrollView()
     
     lazy var contentViewSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+    
+    var email: String?
+    var password: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +92,7 @@ class LoginViewController: UIViewController {
     func setupPasswordTextField() {
         passwordTextField.borderStyle = .line
         passwordTextField.backgroundColor = .white
+        passwordTextField.isSecureTextEntry = true
     }
     
     func setupLoginButton() {
@@ -121,10 +126,20 @@ class LoginViewController: UIViewController {
     
     //MARK: - ACTIONS
     @objc func loginButtonTapped(sender: UIButton!) {
-        let homeViewController = HomeViewController()
-        navigationController?.present(homeViewController, animated: true, completion: nil)
+        email = emailTextField.text
+        password = passwordTextField.text
+        
+        Auth.auth().signIn(withEmail: email!, password: password!) { (user, error) in
+            if let error = error {
+                print("Error = \(error.localizedDescription)")
+            } else if let user = user {
+                print("user = \(user)")
+                let homeViewController = HomeViewController()
+                self.navigationController?.present(homeViewController, animated: true, completion: nil)
+            }
+        }
     }
-    
+ 
     @objc func registerPageButtonTapped() {
         let registerViewController = RegisterViewController()
         navigationController?.setViewControllers([registerViewController], animated: true)
