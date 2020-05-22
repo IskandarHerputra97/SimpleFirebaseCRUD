@@ -18,6 +18,12 @@ class HomeViewController: UIViewController {
         // Do any additional setup after loading the view.
         setupTabBar()
         view.backgroundColor = .purple
+        
+        print("View did load from HomeViewController")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        print("View will appear from HomeViewController")
     }
     
     //MARK: - SETUP UI

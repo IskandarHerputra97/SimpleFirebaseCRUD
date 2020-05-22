@@ -8,6 +8,8 @@ target 'SimpleFirebaseCRUD' do
   # Pods for SimpleFirebaseCRUD
 
   pod 'Alamofire', '~> 4.9.1'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Firestore'
 
   target 'SimpleFirebaseCRUDTests' do
     inherit! :search_paths
