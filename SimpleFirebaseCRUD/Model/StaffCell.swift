@@ -29,7 +29,7 @@ class StaffCell: UITableViewCell {
     }
     
     func set(staff: Staff) {
-        staffImageView.image = staff.image
+        //staffImageView.image = staff.image
         staffNameLabel.text = staff.name
     }
     
