@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
     let passwordTextField = UITextField()
     let loginButton = UIButton()
     let registerPageButton = UIButton()
+    let errorMessageLabel = UILabel()
     
     let scrollView = UIScrollView()
     
@@ -30,7 +31,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = .red
+        view.backgroundColor = .gray
         self.title = "Login Page"
         
         setupStackView()
@@ -42,6 +43,7 @@ class LoginViewController: UIViewController {
         setupPasswordTextField()
         setupLoginButton()
         setupRegisterPageButton()
+        setupErrorMessageLabel()
     }
 
     //MARK: - SETUP UI
@@ -58,6 +60,7 @@ class LoginViewController: UIViewController {
         stackView.addArrangedSubview(passwordTextField)
         stackView.addArrangedSubview(loginButton)
         stackView.addArrangedSubview(registerPageButton)
+        stackView.addArrangedSubview(errorMessageLabel)
         
         setStackViewConstraints()
     }
@@ -109,6 +112,15 @@ class LoginViewController: UIViewController {
         registerPageButton.addTarget(self, action: #selector(registerPageButtonTapped), for: .touchUpInside)
     }
     
+    func setupErrorMessageLabel() {
+        errorMessageLabel.isHidden = true
+        
+        errorMessageLabel.text = "Error message"
+        errorMessageLabel.numberOfLines = 2
+        errorMessageLabel.textColor = .red
+        errorMessageLabel.textAlignment = .center
+    }
+    
     //MARK: - SET CONSTRAINTS
     func setStackViewConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -132,6 +144,8 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: email!, password: password!) { (user, error) in
             if let error = error {
                 print("Error = \(error.localizedDescription)")
+                self.errorMessageLabel.text = error.localizedDescription
+                self.errorMessageLabel.isHidden = false
             } else if let user = user {
                 print("user = \(user)")
                 let homeViewController = HomeViewController()

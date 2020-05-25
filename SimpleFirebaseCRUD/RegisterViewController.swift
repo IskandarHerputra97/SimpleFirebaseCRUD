@@ -18,6 +18,7 @@ class RegisterViewController: UIViewController {
     let passwordTextField = UITextField()
     let registerButton = UIButton()
     let loginPageButton = UIButton()
+    let errorMessageLabel = UILabel()
     
     let scrollView = UIScrollView()
     
@@ -29,7 +30,7 @@ class RegisterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = .red
+        view.backgroundColor = .gray
         self.title = "Register Page"
         
         setupStackView()
@@ -41,6 +42,16 @@ class RegisterViewController: UIViewController {
         setupPasswordTextField()
         setupRegisterButton()
         setupLoginPageButton()
+        setupErrorMessageLabel()
+    }
+    
+    func setupErrorMessageLabel() {
+        errorMessageLabel.isHidden = true
+        
+        errorMessageLabel.text = "Error message"
+        errorMessageLabel.numberOfLines = 2
+        errorMessageLabel.textColor = .red
+        errorMessageLabel.textAlignment = .center
     }
     
     //MARK: - SETUP UI
@@ -57,6 +68,7 @@ class RegisterViewController: UIViewController {
         stackView.addArrangedSubview(passwordTextField)
         stackView.addArrangedSubview(registerButton)
         stackView.addArrangedSubview(loginPageButton)
+        stackView.addArrangedSubview(errorMessageLabel)
         
         setStackViewConstraints()
     }
@@ -131,6 +143,8 @@ class RegisterViewController: UIViewController {
         Auth.auth().createUser(withEmail: email!, password: password!) { (user, error) in
             if let error = error {
                 print(error.localizedDescription)
+                self.errorMessageLabel.text = error.localizedDescription
+                self.errorMessageLabel.isHidden = false
             } else if let user = user {
                 print("user = \(user)")
                 let homeViewController = HomeViewController()

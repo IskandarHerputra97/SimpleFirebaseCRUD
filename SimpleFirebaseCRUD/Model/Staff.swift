@@ -17,10 +17,12 @@ var staffList = [Staff]()
 //let dispatchGroup = DispatchGroup()
 
 struct Staff {
-    var image: UIImage
     var name: String
-    
-   
+    var phoneNumber: String
+    var email: String
+    var salary: Int
+    var age: Int
+    var address: String
 }
 
 //func requestData(completion: ((_ data: Staff) -> Void)) {
@@ -28,7 +30,7 @@ struct Staff {
 //
 //    completion(data)
 //}
-
+/*
 func fetchData() {
     //dispatchGroup.enter()
     
@@ -69,3 +71,4 @@ func fetchData() {
 
     //return staffList
 }
+*/
