@@ -12,6 +12,8 @@ import Firebase
 
 class NetworkingClient {
     
+    var test = "Test name"
+    
     typealias WebServiceResponse = ([[String: Any]]?, Error?) -> Void
     
     func execute(_ url: URL, completion: @escaping WebServiceResponse) {
@@ -26,20 +28,22 @@ class NetworkingClient {
         }
     }
     
-    func fetchDataWithAlamofire() {
+    func fetchDataWithAlamofire(completion: @escaping (_ result: String) -> ()) {
         Alamofire.request("https://api.namefake.com", method: .get).responseJSON { (response) in
             //check if result has value
             if let JSON = response.result.value as? [String: Any] {
                 print(JSON["name"] as! String)
+                let myResult = JSON["name"] as! String
+                completion(myResult)
             }
         }
     }
     
     //Firebase Cloud Firestore
     let dummyStaff = ["Colonel Sanders", "Ronald McDonald", "Burger King"]
-    var staffData = [Staff]()    
+    var staffData = [Staff]()
     
-    func getStaffData() {
+    func getStaffData(completion: @escaping () -> ()) {
         let db = Firestore.firestore()
         
         db.collection("staff").getDocuments() { (querySnapshot, error) in
@@ -62,13 +66,36 @@ class NetworkingClient {
                     
                     self.staffData.append(newStaff)
                     
-                    DispatchQueue.main.async {
-                        StaffTableListViewController().tableView.reloadData()
-                    }
+                    //DispatchQueue.main.async {
+                        //StaffTableListViewController().tableView.reloadData()
+                        completion()
+                    //}
                 }
             }
         }
     }
     
     func updateStaffData() {}
+    
+    //Firebase storage
+    var staffImageData = [UIImage?]()
+    
+    func getStaffImage(completion: @escaping () -> ()) {
+        //Buat reference untuk firebase storage
+        let storage = Storage.storage().reference()
+        
+        var staffRef = storage.child("images/Random people 1.jpeg")
+        
+        staffRef.getData(maxSize: 4 * 1024 * 1024) { (data, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print("Success!")
+                let staffImage = UIImage(data: data!)
+                self.staffImageData.append(staffImage!)
+                //print("staff image = \(self.staffImageData)")
+                completion()
+            }
+        }
+    }
 }

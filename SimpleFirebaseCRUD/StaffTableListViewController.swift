@@ -29,7 +29,17 @@ class StaffTableListViewController: UIViewController {
         //setupFetchButton()
     
         //fetchStaffData()
-        networkingClient.getStaffData()
+        //networkingClient.getStaffData()
+        
+        networkingClient.getStaffData {
+            self.tableView.reloadData()
+        }
+ 
+ 
+        networkingClient.getStaffImage {
+            print("staff image from table view controller = \(self.networkingClient.staffImageData)")
+            self.tableView.reloadData()
+        }
         
         setupTableView()
         
@@ -148,6 +158,8 @@ extension StaffTableListViewController: UITableViewDelegate, UITableViewDataSour
         //cell.textLabel?.text = "Test Cell"
         //cell.textLabel?.text = networkingClient.dummyStaff[indexPath.row]
         
+        //cell.imageView?.image = UIImage(named: "bill-gates")
+        cell.imageView?.image = networkingClient.staffImageData[0] ?? UIImage(named: "bill-gates")
         cell.textLabel?.text = networkingClient.staffData[indexPath.row].name
         cell.detailTextLabel?.text = networkingClient.staffData[indexPath.row].email
         return cell
@@ -159,13 +171,18 @@ extension StaffTableListViewController: UITableViewDelegate, UITableViewDataSour
         
         let staffDetailViewController = StaffDetailViewController()
         
+        //staffDetailViewController.staffImageView.image = UIImage(named: "jeff-bezos")
+        staffDetailViewController.staffImageView.image = networkingClient.staffImageData[0]
         staffDetailViewController.nameLabel.text = networkingClient.staffData[indexPath.row].name
         staffDetailViewController.phoneNumberLabel.text = networkingClient.staffData[indexPath.row].phoneNumber
         staffDetailViewController.emailLabel.text = networkingClient.staffData[indexPath.row].email
-        staffDetailViewController.salaryLabel.text = String(networkingClient.staffData[indexPath.row].salary)
+        //staffDetailViewController.salaryLabel.text = String(networkingClient.staffData[indexPath.row].salary)
+        staffDetailViewController.salaryLabel.text = "$ \(networkingClient.staffData[indexPath.row].salary)"
         staffDetailViewController.ageLabel.text = String(networkingClient.staffData[indexPath.row].age)
         staffDetailViewController.addressLabel.text = networkingClient.staffData[indexPath.row].address
        
         navigationController?.pushViewController(staffDetailViewController, animated: true)
+        
+        
     }
 }
