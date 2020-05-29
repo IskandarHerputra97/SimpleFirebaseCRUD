@@ -28,6 +28,7 @@
 		60BB97212466DBA40085A5F6 /* SimpleFirebaseCRUDTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BB97202466DBA40085A5F6 /* SimpleFirebaseCRUDTests.swift */; };
 		60BB972C2469265A0085A5F6 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BB972B2469265A0085A5F6 /* RegisterViewController.swift */; };
 		60BB972E246929B00085A5F6 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60BB972D246929B00085A5F6 /* HomeViewController.swift */; };
+		60E5178B247E5849008BD885 /* StaffCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60E5178A247E5849008BD885 /* StaffCollectionViewCell.swift */; };
 		C0E66C0A8D4CE6BACAE9258C /* Pods_SimpleFirebaseCRUD.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 877E82296502A9704147A862 /* Pods_SimpleFirebaseCRUD.framework */; };
 		FE69657A6911DCA58796745E /* Pods_SimpleFirebaseCRUDTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 914D7F69FE8A3D5BD9BA3DB1 /* Pods_SimpleFirebaseCRUDTests.framework */; };
 /* End PBXBuildFile section */
@@ -70,6 +71,7 @@
 		60BB97222466DBA40085A5F6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		60BB972B2469265A0085A5F6 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		60BB972D246929B00085A5F6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		60E5178A247E5849008BD885 /* StaffCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaffCollectionViewCell.swift; sourceTree = "<group>"; };
 		877E82296502A9704147A862 /* Pods_SimpleFirebaseCRUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleFirebaseCRUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		914D7F69FE8A3D5BD9BA3DB1 /* Pods_SimpleFirebaseCRUDTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleFirebaseCRUDTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BF13F9810806A2475542A372 /* Pods-SimpleFirebaseCRUD.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleFirebaseCRUD.debug.xcconfig"; path = "Target Support Files/Pods-SimpleFirebaseCRUD/Pods-SimpleFirebaseCRUD.debug.xcconfig"; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				60A336292473905100FA9A28 /* SecondViewController.swift */,
 				60A3362B2473DFEB00FA9A28 /* StaffTableListViewController.swift */,
 				601881962474F3D3004EDFEC /* StaffCollectionListViewController.swift */,
+				60E5178A247E5849008BD885 /* StaffCollectionViewCell.swift */,
 				6033A228247B605700A5A500 /* StaffDetailViewController.swift */,
 				6033A22A247B6AB900A5A500 /* EditStaffViewController.swift */,
 			);
@@ -350,6 +353,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6033A22B247B6AB900A5A500 /* EditStaffViewController.swift in Sources */,
+				60E5178B247E5849008BD885 /* StaffCollectionViewCell.swift in Sources */,
 				6033A229247B605700A5A500 /* StaffDetailViewController.swift in Sources */,
 				6082079D2476510F00FBD3FE /* Staff.swift in Sources */,
 				60A3362A2473905200FA9A28 /* SecondViewController.swift in Sources */,

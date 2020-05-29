@@ -185,13 +185,24 @@ class ProfileViewController: UIViewController {
         }
         */
          //networkingClient.fetchDataWithAlamofire()
-        
+        /*
         Alamofire.request("https://api.namefake.com", method: .get).responseJSON { (response) in
             //check if result has value
             if let JSON = response.result.value as? [String: Any] {
                 print(JSON["name"] as! String)
                 self.randomNameLabel.text = JSON["name"] as? String
             }
+        }
+        */
+        
+        
+//        networkingClient.fetchDataWithAlamofire { (result) in
+//            self.randomNameLabel.text = result
+//        }
+ 
+        //self.randomNameLabel.text = "Data"
+        networkingClient.fetchDataWithAlamofire { (result) in
+            self.randomNameLabel.text = result
         }
     }
 }

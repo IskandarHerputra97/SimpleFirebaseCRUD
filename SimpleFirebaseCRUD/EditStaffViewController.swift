@@ -11,7 +11,9 @@ import UIKit
 class EditStaffViewController: UIViewController {
 
     //MARK: - PROPERTIES
+    let scrollView = UIScrollView()
     let stackView = UIStackView()
+    let staffImageView = UIImageView()
     let nameLabel = UILabel()
     let nameTextField = UITextField()
     let phoneNumberLabel = UILabel()
@@ -24,6 +26,7 @@ class EditStaffViewController: UIViewController {
     let ageTextField = UITextField()
     let addressLabel = UILabel()
     let addressTextField = UITextField()
+    let errorMessageLabel = UILabel()
     
     let stackView2 = UIStackView()
     let editButton = UIButton()
@@ -34,6 +37,8 @@ class EditStaffViewController: UIViewController {
         // Do any additional setup after loading the view.
         view.backgroundColor = .yellow
         title = "Edit Staff Data"
+        
+        setupScrollView()
         
         setupNameLabel()
         setupNameTextField()
@@ -47,22 +52,34 @@ class EditStaffViewController: UIViewController {
         setupAgeTextField()
         setupAddressLabel()
         setupAddressTextField()
-        setupStackView()
+        setupErrorMessageLabel()
         
         setupEditButton()
         setupCancelButton()
         setupStackView2()
+        
+        setupStackView()
+        
+        
     }
     
     //MARK : - SETUP UI
+    func setupScrollView() {
+        view.addSubview(scrollView)
+        
+        scrollView.addSubview(stackView)
+        
+        setScrollViewConstraints()
+    }
+    
     func setupStackView() {
-        view.addSubview(stackView)
+        //view.addSubview(stackView)
         
         stackView.axis = .vertical
         stackView.spacing = 10
         stackView.alignment = .center
         //stackView.distribution = .fillProportionally
-        
+        stackView.addArrangedSubview(staffImageView)
         stackView.addArrangedSubview(nameLabel)
         stackView.addArrangedSubview(nameTextField)
         stackView.addArrangedSubview(phoneNumberLabel)
@@ -75,8 +92,16 @@ class EditStaffViewController: UIViewController {
         stackView.addArrangedSubview(ageTextField)
         stackView.addArrangedSubview(addressLabel)
         stackView.addArrangedSubview(addressTextField)
+        stackView.addArrangedSubview(errorMessageLabel)
+        stackView.addArrangedSubview(stackView2)
         
         setStackViewConstraints()
+    }
+    
+    func setupStaffImageView() {
+        //staffImageView.translatesAutoresizingMaskIntoConstraints = false
+        //staffImageView.topAnchor.constraint(equalTo: stackView.topAnchor, constant: 75).isActive = true
+        //staffImageView.heightAnchor.constraint(equalToConstant: 200).isActive = true
     }
     
     func setupNameLabel() {
@@ -119,7 +144,7 @@ class EditStaffViewController: UIViewController {
     }
     
     func setupSalaryLabel() {
-        salaryLabel.text = "Salary label"
+        salaryLabel.text = "Salary label ($1 - $1000)"
     }
     
     func setupSalaryTextField() {
@@ -157,6 +182,15 @@ class EditStaffViewController: UIViewController {
         setTextFieldConstraints(textField: addressTextField)
     }
     
+    func setupErrorMessageLabel() {
+        errorMessageLabel.isHidden = true
+        
+        errorMessageLabel.text = "Please change at least one staff data"
+        errorMessageLabel.numberOfLines = 2
+        errorMessageLabel.textColor = .red
+        errorMessageLabel.textAlignment = .center
+    }
+    
     func setupStackView2() {
         view.addSubview(stackView2)
         
@@ -168,7 +202,7 @@ class EditStaffViewController: UIViewController {
         stackView2.addArrangedSubview(editButton)
         stackView2.addArrangedSubview(cancelButton)
         
-        setStackView2Constraints()
+        //setStackView2Constraints()
     }
     
     func setupEditButton() {
@@ -186,13 +220,22 @@ class EditStaffViewController: UIViewController {
     }
     
     //MARK : - SET CONSTRAINTS
+    func setScrollViewConstraints() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
     func setStackViewConstraints() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
-        //stackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
-        stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor).isActive = true
-        //stackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor).isActive = true
+        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
+        //stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+        stackView.widthAnchor.constraint(equalTo: scrollView.widthAnchor).isActive = true
     }
     
     func setTextFieldConstraints(textField name: UIView) {
@@ -209,8 +252,31 @@ class EditStaffViewController: UIViewController {
     }
     
     //MARK : - ACTIONS
+    func checkIfTextFieldValueChanged() -> Bool {
+        if nameTextField.text == "" && phoneNumberTextField.text == "" && emailTextField.text == "" && salaryTextField.text == "" && ageTextField.text == "" && addressTextField.text == "" {
+            return false
+        } else {
+            return true
+        }
+    }
+    
     @objc func editButtonTapped() {
-        print("Edit")
+        let textFieldChanged = checkIfTextFieldValueChanged()
+        if textFieldChanged {
+            let salary = Int(salaryTextField.text!)!
+            print("\(salary)")
+            if salary < 1 || salary > 1000 {
+                errorMessageLabel.text = "Salary must be between $1 to $1000"
+                errorMessageLabel.isHidden = false
+            } else {
+                errorMessageLabel.isHidden = true
+                print("Edit")
+                dismiss(animated: true, completion: nil)
+            }
+        } else {
+            errorMessageLabel.isHidden = false
+            print("all text field empty")
+        }
     }
     
     @objc func cancelButtonTapped() {
